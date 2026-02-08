@@ -11,7 +11,6 @@ export function setupSwagger(app: INestApplication): void {
   }
 
   const appVersion = configService.get<string>('APP_VERSION', '1.0.0');
-  const cookieName = environment === 'staging' ? 'SUPERZOOSTAGINGSID' : 'SUPERZOOLOCALSID';
   const swaggerPath = 'api/docs';
   const jsonDocumentUrl = `${swaggerPath}/spec/json`;
   const yamlDocumentUrl = `${swaggerPath}/spec/yaml`;
@@ -22,7 +21,6 @@ export function setupSwagger(app: INestApplication): void {
       'Centralized monitoring system for scheduler processes across multiple services',
     )
     .setVersion(appVersion)
-    .addCookieAuth(cookieName)
     .addApiKey(
       {
         type: 'apiKey',

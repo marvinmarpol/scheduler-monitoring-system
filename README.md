@@ -105,7 +105,7 @@ npm run start:prod
 
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
-| `NODE_ENV` | Environment (development/production) | development | No |
+| `NODE_ENV` | Environment | local | No |
 | `PORT` | Application port | 3000 | No |
 | `AWS_REGION` | AWS region | ap-southeast-1 | Yes |
 | `DYNAMODB_TABLE_SCHEDULERS` | Schedulers table name | schedulers | Yes |
