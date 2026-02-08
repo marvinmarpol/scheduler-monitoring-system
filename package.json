@@ -1,6 +1,9 @@
 {
   "name": "scheduler-monitoring-system",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=20 <25"
+  },
   "description": "Centralized Scheduler Monitoring System",
   "author": "Marvin Mitchell",
   "private": true,
@@ -24,7 +27,7 @@
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
-    "@nestjs/schedule": "^6.1.1",
+    "@nestjs/schedule": "^5.0.0",
     "@nestjs/swagger": "^11.2.6",
     "@nestjs/throttler": "^6.5.0",
     "@slack/web-api": "^7.13.0",
