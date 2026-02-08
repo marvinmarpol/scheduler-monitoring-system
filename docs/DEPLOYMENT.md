@@ -159,6 +159,10 @@ Create `task-definition.json`:
           "value": "3000"
         },
         {
+          "name": "APP_VERSION",
+          "value": "1.0.1"
+        },
+        {
           "name": "AWS_REGION",
           "value": "ap-southeast-1"
         },
@@ -234,6 +238,7 @@ metadata:
 data:
   NODE_ENV: "production"
   PORT: "3000"
+  APP_VERSION: "1.0.1"
   AWS_REGION: "ap-southeast-1"
   DYNAMODB_TABLE_SCHEDULERS: "schedulers-prod"
   DYNAMODB_TABLE_STATUS_HISTORY: "scheduler-status-history-prod"

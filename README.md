@@ -107,6 +107,7 @@ npm run start:prod
 |----------|-------------|---------|----------|
 | `NODE_ENV` | Environment | local | No |
 | `PORT` | Application port | 3000 | No |
+| `APP_VERSION` | Current App Version | 1.0.0 | No |
 | `AWS_REGION` | AWS region | ap-southeast-1 | Yes |
 | `DYNAMODB_TABLE_SCHEDULERS` | Schedulers table name | schedulers | Yes |
 | `DYNAMODB_TABLE_STATUS_HISTORY` | History table name | scheduler_status_history | Yes |
