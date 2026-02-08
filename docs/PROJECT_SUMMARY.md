@@ -44,40 +44,40 @@ A complete, production-ready NestJS backend service for centralized scheduler mo
 scheduler-monitoring-system/
 ├── src/
 │   ├── common/
-│   │   ├── entities/              # Domain models
+│   │   ├── entities/                                   # Domain models
 │   │   │   ├── scheduler.entity.ts
 │   │   │   └── status-history.entity.ts
-│   │   ├── enums/                 # Status enumerations
-│   │   ├── interfaces/            # Repository abstractions
+│   │   ├── enums/                                      # Status enumerations
+│   │   ├── interfaces/                                 # Repository abstractions
 │   │   │   ├── scheduler-repository.interface.ts
 │   │   │   ├── status-history-repository.interface.ts
 │   │   │   ├── queue-service.interface.ts
 │   │   │   └── notification-service.interface.ts
-│   │   ├── guards/                # API key authentication
-│   │   ├── filters/               # Exception handling
-│   │   └── interceptors/          # HTTP logging
+│   │   ├── guards/                                     # API key authentication
+│   │   ├── filters/                                    # Exception handling
+│   │   └── interceptors/                               # HTTP logging
 │   ├── modules/
 │   │   └── schedulers/
-│   │       ├── dto/               # Request/response DTOs
+│   │       ├── dto/                                    # Request/response DTOs
 │   │       ├── scheduler.controller.ts
 │   │       ├── scheduler.service.ts
 │   │       ├── slack-worker.service.ts
 │   │       └── scheduler.module.ts
 │   ├── infrastructure/
 │   │   ├── database/
-│   │   │   └── dynamodb/          # DynamoDB implementation
+│   │   │   └── dynamodb/                               # DynamoDB implementation
 │   │   ├── queue/
-│   │   │   └── sqs/               # SQS implementation
+│   │   │   └── sqs/                                    # SQS implementation
 │   │   └── notification/
-│   │       └── slack/             # Slack implementation
+│   │       └── slack/                                  # Slack implementation
 │   ├── app.module.ts
 │   └── main.ts
 ├── docs/
-│   ├── API_USAGE.md              # Integration guide
-│   ├── DEPLOYMENT.md             # Deployment guide
-│   └── ARCHITECTURE.md           # Architecture docs
+│   ├── API_USAGE.md                                    # Integration guide
+│   ├── DEPLOYMENT.md                                   # Deployment guide
+│   └── ARCHITECTURE.md                                 # Architecture docs
 ├── scripts/
-│   └── setup-dynamodb.sh         # Database setup
+│   └── setup-dynamodb.sh                               # Database setup
 ├── package.json
 ├── tsconfig.json
 ├── Dockerfile
@@ -210,9 +210,9 @@ SQS_QUEUE_URL=https://sqs...
 
 ## 📊 Technology Stack
 
-- **Framework**: NestJS 10.x
+- **Framework**: NestJS 11.x
 - **Language**: TypeScript 5.x
-- **Runtime**: Node.js 18 LTS
+- **Runtime**: Node.js 24 LTS
 - **Database**: DynamoDB (easily swappable)
 - **Queue**: SQS (optional, Phase 2)
 - **Notification**: Slack

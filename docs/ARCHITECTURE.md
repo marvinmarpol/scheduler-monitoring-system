@@ -16,46 +16,46 @@ The Scheduler Monitoring System is built using a layered architecture with clear
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     Presentation Layer                       │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │ REST API Controllers (scheduler.controller.ts)        │  │
-│  │ - Request validation (DTOs)                           │  │
-│  │ - Response formatting                                 │  │
-│  │ - Error handling                                      │  │
-│  └──────────────────────────────────────────────────────┘  │
+│                     Presentation Layer                      │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │ REST API Controllers (scheduler.controller.ts)       │   │
+│  │ - Request validation (DTOs)                          │   │
+│  │ - Response formatting                                │   │
+│  │ - Error handling                                     │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
-│                      Application Layer                       │
-│  ┌──────────────────────────────────────────────────────┐  │
+│                      Application Layer                      │
+│  ┌───────────────────────────────────────────────────────┐  │
 │  │ Business Logic Services                               │  │
 │  │ - SchedulerService: Core business logic               │  │
 │  │ - SlackWorkerService: Scheduled tasks                 │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  └───────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
-│                       Domain Layer                           │
-│  ┌──────────────────────────────────────────────────────┐  │
+│                       Domain Layer                          │
+│  ┌───────────────────────────────────────────────────────┐  │
 │  │ Domain Entities                                       │  │
 │  │ - Scheduler (with business methods)                   │  │
 │  │ - StatusHistory                                       │  │
-│  │                                                        │  │
+│  │                                                       │  │
 │  │ Domain Interfaces (Abstractions)                      │  │
 │  │ - ISchedulerRepository                                │  │
 │  │ - IStatusHistoryRepository                            │  │
 │  │ - INotificationService                                │  │
 │  │ - IQueueService                                       │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  └───────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
-│                    Infrastructure Layer                      │
-│  ┌────────────────┬─────────────────┬───────────────────┐  │
-│  │ Database       │ Notification    │ Queue             │  │
-│  │ - DynamoDB     │ - Slack         │ - SQS             │  │
-│  │   Repository   │   Service       │   Service         │  │
-│  └────────────────┴─────────────────┴───────────────────┘  │
+│                    Infrastructure Layer                     │
+│  ┌────────────────┬─────────────────┬───────────────────┐   │
+│  │ Database       │ Notification    │ Queue             │   │
+│  │ - DynamoDB     │ - Slack         │ - SQS             │   │
+│  │   Repository   │   Service       │   Service         │   │
+│  └────────────────┴─────────────────┴───────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -266,7 +266,7 @@ The application is **stateless** and can be scaled horizontally:
 │   Instance   │     │   Instance   │     │   Instance   │
 │      1       │     │      2       │     │      N       │
 └──────┬───────┘     └──────┬───────┘     └──────┬───────┘
-       └──────────────┬──────┴──────────────────┘
+       └──────────────┬─────┴────────────────────┘
                       ↓
               ┌───────────────┐
               │ Load Balancer │

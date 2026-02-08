@@ -19,28 +19,28 @@ The system follows clean architecture principles with clear separation of concer
 
 ```
 src/
-├── common/                    # Shared components
-│   ├── entities/             # Domain models
-│   ├── enums/                # Enumerations
-│   ├── interfaces/           # Repository & service abstractions
-│   ├── guards/               # Authentication guards
-│   ├── filters/              # Exception filters
-│   └── interceptors/         # HTTP interceptors
-├── modules/                   # Feature modules
+├── common/                         # Shared components
+│   ├── entities/                   # Domain models
+│   ├── enums/                      # Enumerations
+│   ├── interfaces/                 # Repository & service abstractions
+│   ├── guards/                     # Authentication guards
+│   ├── filters/                    # Exception filters
+│   └── interceptors/               # HTTP interceptors
+├── modules/                        # Feature modules
 │   └── schedulers/
-│       ├── dto/              # Data transfer objects
+│       ├── dto/                    # Data transfer objects
 │       ├── scheduler.controller.ts
 │       ├── scheduler.service.ts
 │       ├── slack-worker.service.ts
 │       └── scheduler.module.ts
-├── infrastructure/            # External integrations
+├── infrastructure/                 # External integrations
 │   ├── database/
-│   │   └── dynamodb/         # DynamoDB repositories
+│   │   └── dynamodb/               # DynamoDB repositories
 │   ├── queue/
-│   │   └── sqs/              # SQS queue service
+│   │   └── sqs/                    # SQS queue service
 │   └── notification/
-│       └── slack/            # Slack notification service
-└── main.ts                    # Application entry point
+│       └── slack/                  # Slack notification service
+└── main.ts                         # Application entry point
 ```
 
 ### Key Design Decisions
@@ -55,7 +55,7 @@ src/
 
 ### Prerequisites
 
-- Node.js 18 LTS or higher
+- Node.js 20 LTS or higher
 - Docker & Docker Compose (for local development)
 - AWS Account (for production)
 - Slack Bot Token
@@ -205,7 +205,7 @@ x-api-key: your-api-key
 📊 EOD Process Status - 15 Jan 2024 02:00
 ─────────────────────────────────────────
 Service     │ Job Name      │ Status
-────────────┼───────────────┼──────────
+────────────┼───────────────┼────────────
 Service A   │ EOD Process   │ ✅ Complete
 Service B   │ Data Sync     │ 🟡 Running
 Service C   │ Reporting     │ ⬜ Pending
@@ -356,10 +356,6 @@ Logs include:
 2. Write tests for new features
 3. Update documentation
 4. Use conventional commits
-
-## 📄 License
-
-MIT
 
 ## 📞 Support
 
