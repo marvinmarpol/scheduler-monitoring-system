@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - AWS_REGION=ap-southeast-1
+      - DYNAMODB_ENDPOINT=http://dynamodb:8000
+      - DYNAMODB_TABLE_SCHEDULERS=schedulers
+      - DYNAMODB_TABLE_STATUS_HISTORY=scheduler_status_history
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
+      - SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}
+      - SLACK_ENABLED=true
+      - API_KEYS=test-key-1,test-key-2
+    depends_on:
+      - dynamodb
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    ports:
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    volumes:
+      - dynamodb-data:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin:latest
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+      - AWS_REGION=ap-southeast-1
+    depends_on:
+      - dynamodb
+
+volumes:
+  dynamodb-data:
