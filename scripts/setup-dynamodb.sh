@@ -1,48 +1,72 @@
-version: '3.8'
+#!/usr/bin/env bash
+set -e
 
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-      - PORT=3000
-      - AWS_REGION=ap-southeast-1
-      - DYNAMODB_ENDPOINT=http://dynamodb:8000
-      - DYNAMODB_TABLE_SCHEDULERS=schedulers
-      - DYNAMODB_TABLE_STATUS_HISTORY=scheduler_status_history
-      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
-      - SLACK_CHANNEL_ID=${SLACK_CHANNEL_ID}
-      - SLACK_ENABLED=true
-      - API_KEYS=test-key-1,test-key-2
-    depends_on:
-      - dynamodb
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: npm run start:dev
+AWS_REGION="ap-southeast-1"
+ENDPOINT="http://localhost:8000"
 
-  dynamodb:
-    image: amazon/dynamodb-local:latest
-    ports:
-      - "8000:8000"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-    volumes:
-      - dynamodb-data:/home/dynamodblocal/data
-    working_dir: /home/dynamodblocal
+export AWS_ACCESS_KEY_ID=fake
+export AWS_SECRET_ACCESS_KEY=fake
+export AWS_DEFAULT_REGION=$AWS_REGION
 
-  dynamodb-admin:
-    image: aaronshaf/dynamodb-admin:latest
-    ports:
-      - "8001:8001"
-    environment:
-      - DYNAMO_ENDPOINT=http://dynamodb:8000
-      - AWS_REGION=ap-southeast-1
-    depends_on:
-      - dynamodb
+echo "Waiting for DynamoDB Local..."
 
-volumes:
-  dynamodb-data:
+until aws dynamodb list-tables \
+  --endpoint-url $ENDPOINT \
+  --region $AWS_REGION \
+  >/dev/null 2>&1
+do
+  sleep 1
+done
+
+echo "DynamoDB Local is ready"
+
+create_table_if_not_exists () {
+  TABLE_NAME=$1
+  CREATE_CMD=$2
+
+  if aws dynamodb describe-table \
+    --table-name "$TABLE_NAME" \
+    --endpoint-url $ENDPOINT \
+    --region $AWS_REGION \
+    >/dev/null 2>&1
+  then
+    echo "Table '$TABLE_NAME' already exists"
+  else
+    echo "Creating table '$TABLE_NAME'..."
+    eval "$CREATE_CMD"
+    echo "Table '$TABLE_NAME' created"
+  fi
+}
+
+create_table_if_not_exists "schedulers" "
+aws dynamodb create-table \
+  --table-name schedulers \
+  --attribute-definitions AttributeName=scheduler_id,AttributeType=S \
+  --key-schema AttributeName=scheduler_id,KeyType=HASH \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+  --endpoint-url $ENDPOINT \
+  --region $AWS_REGION
+"
+
+create_table_if_not_exists "scheduler_status_history" "
+aws dynamodb create-table \
+  --table-name scheduler_status_history \
+  --attribute-definitions \
+    AttributeName=scheduler_id,AttributeType=S \
+    AttributeName=timestamp,AttributeType=S \
+  --key-schema \
+    AttributeName=scheduler_id,KeyType=HASH \
+    AttributeName=timestamp,KeyType=RANGE \
+  --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+  --endpoint-url $ENDPOINT \
+  --region $AWS_REGION
+"
+
+echo ""
+echo "Tables:"
+aws dynamodb list-tables \
+  --endpoint-url $ENDPOINT \
+  --region $AWS_REGION
+
+echo ""
+echo "DynamoDB Local setup complete"
